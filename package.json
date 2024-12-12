@@ -1,0 +1,49 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxi build",
+    "dev": "nuxi dev",
+    "generate": "nuxi generate",
+    "preview": "nuxi preview",
+    "postinstall": "nuxi prepare",
+    "lint": "eslint \"**/*.{ts,tsx,vue,js}\" --fix",
+    "lint-eslint": "eslint --ignore-path .gitignore **/*{ts,tsx,vue,js,json} --fix",
+    "lint-prettier": "prettier --write \"**/*.(ts|tsx|vue|js|json)\""
+  },
+  "devDependencies": {
+    "@nuxtjs/i18n": "^9.0.0",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
+    "@pinia/nuxt": "^0.5.5",
+    "@vueuse/nuxt": "^11.2.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-nuxt": "^4.0.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-vue": "^9.30.0",
+    "nuxt": "^3.9.0",
+    "nuxt-quasar-ui": "^2.1.6",
+    "prettier": "^3.3.3",
+    "sass": "^1.82.0",
+    "sass-loader": "^16.0.4",
+    "vue": "^3.4.3",
+    "vue-router": "^4.2.5",
+    "vue-tsc": "^1.8.27"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "@quasar/extras": "^1.16.12",
+    "@samk-dev/nuxt-vcalendar": "^1.0.4",
+    "@vueuse/core": "^11.3.0",
+    "axios": "^1.7.8",
+    "dayjs": "^1.11.13",
+    "firebase": "^11.0.1",
+    "firebase-functions": "^6.1.1",
+    "lodash.debounce": "^4.0.8",
+    "pinia": "^2.2.6",
+    "quasar": "^2.17.1",
+    "swiper": "^11.1.15",
+    "xlsx": "^0.18.5"
+  }
+}
