@@ -60,9 +60,24 @@ const weatherDescriptions = {
   thunderstorm: "뇌우",
   snow: "눈",
   mist: "안개",
+  haze: "흐린 안개",
+  fog: "짙은 안개", 
   drizzle: "이슬비",
-  "온흐림": "흐림",
-  "튼구름": "구름 많음",
+  "light rain": "가랑비",
+  "moderate rain": "적당한 비",
+  "heavy rain": "많은 비",
+  "very heavy rain": "폭우",
+  "extreme rain": "호우",
+  "freezing rain": "어는 비",
+  "light snow": "가벼운 눈",
+  "heavy snow": "폭설",
+  "sleet": "진눈깨비",
+  "dust": "황사",
+  "sand": "모래 바람",
+  "ash": "화산재",
+  "squall": "돌풍",
+  "tornado": "회오리바람",
+  "박무": "안개",
 };
 
 // 날씨 설명 번역
@@ -128,13 +143,18 @@ const getCurrentLocationWeather = async() => {
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleApiKey}&language=ko`
         );
         const geoData = await geoResponse.json();
+        console.log("GeoData Response:", geoData);
+        
 
         if (!geoData || geoData.status !== "OK" || !geoData.results.length) {
+          console.error("Geocoding API Error:", geoData.status, geoData.error_message);
           throw new Error("도시명 가져오기 실패");
         }
 
         // 도시명 추출
         const cityName = geoData.results[0].address_components.find((comp) =>
+          comp.types.includes("administrative_area_level_1") ||
+          comp.types.includes("administrative_area_level_2") ||
           comp.types.includes("locality")
         )?.long_name || "알 수 없음";
 
