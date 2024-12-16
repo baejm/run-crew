@@ -8,13 +8,13 @@ export default defineNuxtRouteMiddleware((to, from) => {
     //         if (process.client) {
     //         alert('쿠키없어요?');
     //         }
-    //         return navigateTo('https://naver.com',{ external: true });
+    //         return navigateTo('https://https://brooksrunning.co.kr',{ external: true });
     //     }
 
     //2
     //   const source = to.query.source;
     // if (source === 'naver') {
-    //     console.log('네이버에서 접근한 사용자입니다.');
+    //     console.log('카페24에서 접근한 사용자입니다.');
     // } else {
     //     console.log('허용되지 않은 접근입니다.');
     // }
@@ -22,7 +22,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
     //3
     // const referer = useRequestHeaders()['referer']; 
-    // const allowedDomain = 'https://naver.com';
+    // const allowedDomain = 'https://brooksrunning.co.kr';
 
     // if (!referer || !referer.startsWith(allowedDomain)) {
     //   // 접근 차단 및 리다이렉트

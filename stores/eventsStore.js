@@ -35,9 +35,7 @@ export const useEventStore = defineStore('event', () => {
      // events 캐싱 확인 후 fetch
      if (!events.value.length) {
       await fetchEvents();
-      console.log("Fetched events:", events.value);
     }
-    console.log('id',id);
     
     return events.value.find((event) => event.id === id);
   };
@@ -100,7 +98,7 @@ export const useEventStore = defineStore('event', () => {
       // 로컬 이벤트 배열에 추가 (옵션)
       const addedEvent = { id: docRef.id, ...event };
        events.value.push(addedEvent);
-
+      
     // 필요 시 선택된 이벤트 업데이트
     setSelectEvent([addedEvent]);
     
@@ -129,7 +127,6 @@ const fetchApplicationsForEvent = async (eventId) => {
       ...doc.data(),
     }));
 
-    console.log('00000',applications)
     // 신청자 수를 반환
     return {
       applicants: applications,
@@ -181,7 +178,6 @@ const fetchApplicationsForEvent = async (eventId) => {
         remaining: eventData.remaining, // Firestore의 remaining 값을 사용
       };
   
-      console.log("Fetched Event Details:", eventDetails);
       return eventDetails;
     } catch (error) {
       console.error("이벤트 세부 정보를 가져오는 데 실패했습니다:", error);
@@ -197,9 +193,8 @@ const fetchApplicationsForEvent = async (eventId) => {
       await updateDoc(eventRef, {
         remaining: newRemainingCount, // remaining 필드 업데이트
       });
-      console.log("Remaining count updated successfully.");
     } catch (error) {
-      console.error("Failed to update remaining count:", error);
+      console.error("업데이트 실패", error);
     }
   };
 

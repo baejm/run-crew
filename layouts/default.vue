@@ -22,6 +22,5 @@ const userStore = useUserStore();
 
 const handleLogout = async () => {
   await userStore.logoutUser();
-  console.log("Logged out successfully");
 };
   </script>

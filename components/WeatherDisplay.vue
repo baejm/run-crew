@@ -28,7 +28,7 @@
         </SwiperSlide>
       </Swiper>
   
-      <button @click="getCurrentLocationWeather">내 위치 날씨</button>
+      <button @click="getCurrentLocationWeather">현 위치</button>
     </div>
   </template>
   
@@ -54,11 +54,15 @@ const weatherDescriptions = {
   "few clouds": "구름 조금",
   "scattered clouds": "흩어진 구름",
   "broken clouds": "구름 많음",
+  "overcast clouds": "흐림",
   "shower rain": "소나기",
   rain: "비",
   thunderstorm: "뇌우",
   snow: "눈",
   mist: "안개",
+  drizzle: "이슬비",
+  "온흐림": "흐림",
+  "튼구름": "구름 많음",
 };
 
 // 날씨 설명 번역
@@ -146,7 +150,6 @@ const getCurrentLocationWeather = async() => {
           if (existingIndex !== -1) {
             // 이미 있는 경우 기존 데이터 업데이트 및 맨 앞 이동
             weatherSlides.value.splice(existingIndex, 1); 
-            console.log("현재 위치 업데이트 완료:", currentWeather);
           }
 
           // 내 위치 날씨를 맨 앞에 추가

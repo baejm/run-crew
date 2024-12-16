@@ -16,7 +16,7 @@
             :key="application.id"
             class="application-item"
           >
-            <h3>이벤트명: {{ application.eventTitle }}</h3>
+            <h3>이벤트명: {{ application?.eventTitle }}</h3>
             <p>
               이벤트 날짜:
               {{ application.eventDate
@@ -152,10 +152,6 @@ const isEventExpired = (application) => {
     const dateTimeString = `${eventDate} ${application.eventStartTime}`;
     const eventDateTime = dayjs(dateTimeString, "YYYY-MM-DD HH:mm");
 
-    // 디버깅: 이벤트 시간 및 현재 시간 출력
-    console.log("이벤트 날짜 및 시간:", eventDateTime.format("YYYY-MM-DD HH:mm"));
-    console.log("현재 시간:", dayjs().format("YYYY-MM-DD HH:mm"));
-
     // 현재 시간과 비교
     return eventDateTime.isBefore(dayjs());
   }
@@ -181,58 +177,9 @@ const formatDateWithTime = (date, time) => {
 onMounted(() => {
   fetchApplications();
 });
+
 </script>
 
 <style scoped>
-.my-applications-container {
-  padding: 20px;
-}
-
-.application-item {
-  border: 1px solid #ccc;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.action-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  text-decoration: none;
-  text-align: center;
-  display: inline-block;
-}
-.action-button.disabled {
-  pointer-events: none; 
-  opacity: 0.5; 
-  cursor: not-allowed; 
-  background: #b1b1b1;
-}
-.edit-button {
-  background-color: #007bff;
-  color: white;
-}
-
-.edit-button:hover {
-  background-color: #0056b3;
-}
-
-.delete-button {
-  background-color: #dc3545;
-  color: white;
-}
-
-.delete-button:hover {
-  background-color: #c82333;
-}
-
+.my-applications-container {}
 </style>

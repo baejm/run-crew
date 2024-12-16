@@ -3,14 +3,18 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   devServer: { //내위치는 https 환경작동을 위한
-    https: true, 
+    https: false, 
+    host: 'localhost',
+    port: 3000,
   },
   ssr: true, // SSR 비활성화
   nitro: {
     preset: 'static' // 정적 사이트 빌드
   },
   plugins: [
-    '~/plugins/firebase.js' // Firebase 초기화 플러그인 추가
+    '~/plugins/firebase.js', // Firebase 초기화 플러그인 추가
+    "~/plugins/events-touch.js",
+    "~/plugins/vue-swipe-modal.js",
   ],
   runtimeConfig: {
     public: {
@@ -32,7 +36,10 @@ export default defineNuxtConfig({
       NODE_ENV: process.env.NODE_ENV || 'development',
     },
   },
-  css: ["@/assets/styles/main.scss","swiper/swiper-bundle.css"],
+  css: [
+    "@/assets/styles/main.scss",
+    "swiper/swiper-bundle.css",
+  ],
   vite: {
     css: {
       preprocessorOptions: {

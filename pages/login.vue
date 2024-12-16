@@ -24,7 +24,6 @@ const handleLogin = async () => {
   const user = await userStore.loginUser(email.value, password.value);
   if (user) {
     // userStore를 사용하여 isAdmin를 가져온 후 확인
-    console.log('userStore.isAdmin01', userStore.isAdmin); // 로그인 후 userStore에서 가져온 isAdmin 확인
     email.value=''
     email.password=''
     // 성공 후 페이지 이동 예시
@@ -36,6 +35,5 @@ const handleLogin = async () => {
 
 const handleLogout = async () => {
   await userStore.logoutUser();
-  console.log("Logged out successfully");
 };
 </script>

@@ -29,18 +29,14 @@ export const useUserStore = defineStore('user', () => {
   const loginUser = async (email, password) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth,email, password); // auth는 $auth로 변경
-      console.log('000',userCredential);
       const userId = userCredential.user.uid; // 로그인한 사용자의 ID
-      console.log('001',userId);
       const userData = await fetchUserInfo(userId); // Firestore에서 사용자 정보 가져오기
-      console.log('002',userData);
   
       if (userData) {
         setUser({ // 수정: userStore.setUser가 아닌 현재 함수에서 직접 호출
           uid: userId,
           isAdmin: userData.isAdmin || false, // isAdmin 여부 설정
         });
-        console.log("로그인 성공:", userData);
         return userData; // 로그인 성공 시 사용자 정보 반환
       }
     } catch (error) {
@@ -52,7 +48,6 @@ export const useUserStore = defineStore('user', () => {
     try {
       await signOut(auth);
       clearUser(); // 로그아웃 후 상태 초기화
-      console.log("로그아웃 성공:", user.value, isAdmin.value);
     } catch (error) {
       console.error("로그아웃 실패:", error);
     }
@@ -60,7 +55,7 @@ export const useUserStore = defineStore('user', () => {
 
   const setUser = (userData) => {
     user.value = userData;
-    isAdmin.value = userData.isAdmin; // 올바르게 값이 설정되는지 확인
+    isAdmin.value = userData.isAdmin; 
   };
 
   const clearUser = () => {

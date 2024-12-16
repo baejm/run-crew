@@ -2,8 +2,9 @@
     <div class="container">
       <WeatherDisplay />
       <MainHeaderImage />
-      <Calendar />
-      <SelectedEvent/>
+      <EventLists />
+      <!-- <Calendar /> -->
+      <!-- <SelectedEvent/> -->
     </div>
   </template>
 

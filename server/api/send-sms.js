@@ -33,8 +33,6 @@ export default defineEventHandler(async (event) => {
     // 서명 생성
     const signature = createSignature(date, salt, config.public.COOLSMS_API_SECRET);
 
-    console.log("CoolSMS 요청 시작:", { from: config.public.COOLSMS_SENDER_PHONE, to: formattedTo, text });
-
     // CoolSMS API 요청
     const response = await axios.post(
       "https://api.coolsms.co.kr/messages/v4/send",
@@ -61,8 +59,6 @@ export default defineEventHandler(async (event) => {
         message: `CoolSMS 전송 실패: ${response.data.error?.message || "알 수 없는 오류"}`,
       });
     }
-
-    console.log("CoolSMS 응답 성공:", response.data);
 
     return {
       success: true,

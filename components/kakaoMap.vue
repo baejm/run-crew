@@ -22,7 +22,6 @@ const kakaoMap = ref(null);
 const marker = ref(null);
 const config = useRuntimeConfig();
 const kakaoApiKey = config.public.KAKAO_API_KEY; // 환경 변수 값 가져오기
-console.log('props.markerDreg:', props.markerDreg);  // 여기에서 props.markerDreg 확인
 const loadKakaoMapAPI = () => {
   return new Promise((resolve, reject) => {
     if (typeof window !== 'undefined' && !window.kakao) {

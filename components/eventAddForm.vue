@@ -21,6 +21,7 @@
       <label for="capacity">등록 가능 인원:</label>
       <select v-model.number="newEvent.capacity" id="capacity" class="custom-select" required>
         <option disabled value="">인원을 선택하세요</option>
+        <option value=1>1명</option>
         <option value=3>3명</option>
         <option value=10>10명</option>
         <option value=20>20명</option>
@@ -137,7 +138,6 @@ const updateLng = (lng) => {
 
 const handleSubmit = async () => {
   try {
-    console.log('addedEvent)');
     const formattedDate = dayjs(newEvent.value.dates).format("YYYY-MM-DD");
 
     // Firestore에 저장
