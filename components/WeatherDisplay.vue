@@ -1,34 +1,41 @@
 
 <template>
     <div class="weather-container">
-      <Swiper
-        v-if="weatherSlides.length > 0"
-        class="mySwiper"
-        :modules="[Autoplay]"
-        direction="vertical"
-        :loop="true"
-        :speed="1000"
-        :autoplay="{ delay: 3000, disableOnInteraction: false }"
-        :slidesPerView="1"
-        :slidesPerGroup="1"
-        :key="swiperKey"
-      >
-        <SwiperSlide v-for="(item, index) in weatherSlides" :key="index">
-          <div class="weather-slide">
-              <div class="weather-info">
-                <img
-                  :src="`https://openweathermap.org/img/wn/${item.icon}@2x.png`"
-                  :alt="item.description"
-                />
-                <p class="description">{{ translatedWeather(item.description) }}</p>
-              </div>
-            <p class="cityName">{{ item.cityName }}</p>
-            <p class="temp">{{ item.temp }}°C</p>
-          </div>
-        </SwiperSlide>
-      </Swiper>
-  
-      <button @click="getCurrentLocationWeather">현 위치</button>
+      <div v-if="loading" class="loading">
+        <LoadingSpinner />
+      </div>
+      <div v-else-if="weatherSlides.length > 0" class="weather-content">
+        <Swiper
+          class="mySwiper"
+          :modules="[Autoplay]"
+          direction="vertical"
+          :loop="true"
+          :speed="1000"
+          :autoplay="{ delay: 3000, disableOnInteraction: false }"
+          :slidesPerView="1"
+          :slidesPerGroup="1"
+          :key="swiperKey"
+        >
+          <SwiperSlide v-for="(item, index) in weatherSlides" :key="index">
+            <div class="weather-slide">
+                <div class="weather-info">
+                  <img
+                    :src="`/img/${item.icon}.png`"
+                    :alt="item.description"
+                  />
+                  <!-- <img
+                    :src="`https://openweathermap.org/img/wn/${item.icon}@2x.png`"
+                    :alt="item.description"
+                  /> -->
+                  <p class="description">{{ translatedWeather(item.description) }}</p>
+                </div>
+              <p class="cityName">{{ item.cityName }}</p>
+              <p class="temp">{{ item.temp }}°C</p>
+            </div>
+          </SwiperSlide>
+        </Swiper>
+        <button @click="getCurrentLocationWeather">현 위치</button>
+      </div>
     </div>
   </template>
   
@@ -39,6 +46,7 @@ import "swiper/swiper-bundle.css";
 
 const weatherSlides = ref([]);
 const swiperKey = ref(0);
+const loading = ref(true);
 
 // 서울 지역 리스트
 const seoulAreas = [
@@ -80,6 +88,24 @@ const weatherDescriptions = {
   "박무": "안개",
 };
 
+const weatherIconMap = {
+  "01d": "wi-day-sunny",
+  "01n": "wi-night-clear",
+  "02d": "wi-day-cloudy",
+  "02n": "wi-night-alt-cloudy",
+  "03d": "wi-cloud",
+  "04d": "wi-cloudy",
+  "09d": "wi-showers",
+  "10d": "wi-rain",
+  "11d": "wi-thunderstorm",
+  "13d": "wi-snow",
+  "50d": "wi-fog",
+};
+
+const getWeatherIcon = (iconCode) => {
+  return weatherIconMap[iconCode] || "wi-na"; // 기본값으로 '알 수 없음' 아이콘
+};
+
 // 날씨 설명 번역
 const translatedWeather = (description) =>
   weatherDescriptions[description.toLowerCase()] || description;
@@ -114,12 +140,17 @@ const fetchWeather = async (lat, lon, cityName) => {
 
 // 모든 지역 날씨 가져오기
 const fetchSeoulAreasWeather = async () => {
+  loading.value = true;
   const slides = [];
   for (const area of seoulAreas) {
     const weather = await fetchWeather(area.lat, area.lon, area.name);
     if (weather) slides.push(weather);
   }
   weatherSlides.value = slides;
+  console.log('weatherSlides',weatherSlides.value);
+  console.log('weatherSlides1',unref(weatherSlides.value));
+  console.log('weatherSlides2',toRaw(weatherSlides.value));
+  
   swiperKey.value++; // Swiper 재렌더링
 };
 
@@ -127,6 +158,7 @@ const fetchSeoulAreasWeather = async () => {
 const getCurrentLocationWeather = async() => {
   if (!navigator.geolocation) {
     alert("현재 브라우저에서 위치 서비스를 사용할 수 없습니다.");
+    loading.value = false;
     return;
   }
 
@@ -151,12 +183,19 @@ const getCurrentLocationWeather = async() => {
           throw new Error("도시명 가져오기 실패");
         }
 
-        // 도시명 추출
-        const cityName = geoData.results[0].address_components.find((comp) =>
-          comp.types.includes("administrative_area_level_1") ||
-          comp.types.includes("administrative_area_level_2") ||
-          comp.types.includes("locality")
-        )?.long_name || "알 수 없음";
+        // 도시명 추출 - 상세 지역부터 큰 범위 순으로 탐색
+        const cityName = geoData.results[0].address_components.find((comp) => {
+          console.log("Examining Component:", comp);
+
+          return (
+            comp.types.includes("sublocality_level_1") ||  // 동/리
+            comp.types.includes("sublocality") ||          // 동/읍/면
+            comp.types.includes("neighborhood") ||         // 동네
+            comp.types.includes("administrative_area_level_2") || // 시/구
+            comp.types.includes("locality")                // 도시
+          );
+        })?.long_name || "알 수 없음";
+        console.log("City Name:", cityName);
 
         // 날씨 정보 가져오기
         const currentWeather = await fetchWeather(latitude, longitude, cityName);
@@ -179,8 +218,12 @@ const getCurrentLocationWeather = async() => {
       } catch (error) {
         console.error("현재 위치 날씨 가져오기 오류:", error);
       }
+      loading.value = false;
     },
-    (error) => handleGeolocationError(error)
+    (error) => {
+      loading.value = false;
+      handleGeolocationError(error)
+    }
   );
 };
 

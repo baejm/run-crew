@@ -1,13 +1,16 @@
 <template>
-  <div class="section event-list-wrap">
-    <h2>이달의 러닝 일정</h2>
-    <NuxtLink :to="`/my-applications`" class="my-list">내 신청 목록</NuxtLink>
-    <button v-if="userStore.isAdmin" @click.stop="gotoInvitation" class="add-event-btn">이벤트 추가</button>
+  <div>
+    <div class="eventList-header">
+      <button v-if="userStore.isAdmin" @click.stop="gotoInvitation" class="add-event-btn">이벤트 추가</button>
+      <select v-if="props.all" v-model="selectedMonth" class="month-filter">
+        <option value="">전체 보기</option>
+        <option v-for="month in availableMonths" :key="month" :value="month">
+          {{ month }}월
+        </option>
+      </select>
+    </div>
     <ul class="event-list">
-      <li v-for="event in upcomingEvents.slice(0, 4)" :key="event.id" class="event-item">
-        <!-- <div class="applications">
-          <button class="event-apply-btn" @click.stop="openApplicationForm(event)">신청하기</button>
-        </div> -->
+      <li v-for="event in displayedEvents" :key="event.id" class="event-item">
         <div class="event-details">
           <div class="event-cont">
             <h3 class="event-title">{{ event.title || '제목 없음' }}</h3>
@@ -21,7 +24,7 @@
             </div>
             <div class="event-recruit">
               <button v-if="!isEventExpired(event) && event.remaining >= 1 " class="recruiting" @click.stop="openApplicationForm(event)">신청하기</button>
-              <button v-else class="recruiting completed">신청완료</button>
+              <button v-else class="recruiting completed">신청마감</button>
             </div>
           </div>
         <NuxtLink v-if="userStore.isAdmin" @click.stop :to="`/event/${event.id}/applicants`" class="applicanion-list">
@@ -56,17 +59,56 @@
 import dayjs from 'dayjs';
 // import { SwipeModal } from '@takuma-ru/vue-swipe-modal';
 
+const props = defineProps({
+  limit: {
+    type: Number,
+    default: 1, // 기본값은 4개
+  },
+  all: {
+    type: Boolean,
+    default: false, // 기본값은 현재 날짜 이후만 표시
+  },
+});
+
+const selectedMonth = ref("");
+const filteredEvents = ref([]);
+
 const eventStore = useEventStore();
 const userStore = useUserStore();
 const { selectedList } = storeToRefs(eventStore);
 const events = ref([]);
 const showApplicationForm = ref(false);
 
-const upcomingEvents = computed(() => {
-  return events.value
-    .filter(event => !isPastDate(event.dates))
-    .sort((a, b) => dayjs(a.dates).isAfter(dayjs(b.dates)) ? 1 : -1);
+const availableMonths = computed(() => {
+  const months = new Set(
+    events.value.map((event) => dayjs(event.dates).format("MM"))
+  );
+  return Array.from(months).sort();
 });
+
+const upcomingEvents = computed(() =>
+  events.value
+    .filter((event) => {
+      if (props.all) {
+        // all이 true일 때 월 선택 필터 적용
+        if (selectedMonth.value !== "") {
+          const eventMonth = dayjs(event.dates).format("MM");
+          return eventMonth === selectedMonth.value;
+        }
+        return true; // 전체 보기
+      } else {
+        // all이 false일 경우 현재 이후 이벤트만 표시
+        const eventDateTime = dayjs(`${event.dates} ${event.startTime}`, "YYYY-MM-DD HH:mm");
+        return eventDateTime.isAfter(dayjs());
+      }
+    })
+    .sort((a, b) => {
+      const dateA = dayjs(`${a.dates} ${a.startTime}`, "YYYY-MM-DD HH:mm");
+      const dateB = dayjs(`${b.dates} ${b.startTime}`, "YYYY-MM-DD HH:mm");
+      return dateA.isAfter(dateB) ? 1 : -1;
+    })
+);
+
 
 function openApplicationForm(event) {
   showApplicationForm.value = true;
@@ -78,12 +120,35 @@ function closeApplicationForm() {
   showApplicationForm.value = false;
 }
 
+onMounted(async () => {
+  try {
+    const fetchedEvents = await eventStore.fetchEvents();
+    events.value = fetchedEvents;
+  } catch (error) {
+    console.error("Error fetching events:", error);
+  }
+});
+
+watch(
+  () => eventStore.events,
+  (newEvents) => {
+    if (newEvents && newEvents.length > 0) {
+      events.value = newEvents;
+    }
+  },
+  { immediate: true }
+);
+
 watch(()=>
   showApplicationForm.value,(newVal) =>{
     if(newVal ==false)
     document.body.classList.remove("overflow-y");
   }
 )
+
+const displayedEvents = computed(() =>
+props.limit > 0 ? upcomingEvents.value.slice(0, props.limit) : upcomingEvents.value
+);
 
 function handleEventClick(event) {
   if (!event) return;
@@ -135,42 +200,10 @@ const isEventExpired = (event) => {
 };
 
 
-onMounted(async () => {
-  try {
-    const fetchedEvents = await eventStore.fetchEvents();
-    events.value = fetchedEvents;
-  } catch (error) {
-    console.error('Error fetching events:', error);
-  }
-});
 
-watch(
-  () => eventStore.events,
-  (newEvents) => {
-    if (newEvents && newEvents.length > 0) {
-      events.value = newEvents;
-    }
-  },
-  { immediate: true }
-);
 </script>
 
 <style scoped>
-
-/* .slide-up-enter-active, .slide-up-leave-active {
-  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-}
-
-.slide-up-enter-from {
-  transform: translateY(100%);
-  opacity: 0;
-}
-
-.slide-up-leave-to {
-  transform: translateY(100%);
-  opacity: 0;
-} */
-
 
 
 </style>

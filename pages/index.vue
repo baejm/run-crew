@@ -2,7 +2,12 @@
     <div class="container">
       <WeatherDisplay />
       <MainHeaderImage />
-      <EventLists />
+      <div class="section event-list-wrap">
+        <h2>브룩스 이벤트일정</h2>
+        <NuxtLink :to="`/event/eventListPage`" class="my-list">전체일정</NuxtLink>
+        <EventLists :limit="4" />
+        <NuxtLink :to="`/my-applications`" class="my-list">내 신청 목록</NuxtLink>
+      </div>
       <!-- <Calendar /> -->
       <!-- <SelectedEvent/> -->
     </div>

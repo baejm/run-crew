@@ -108,7 +108,7 @@ body.overflow-y{overflow-y: hidden;}
 
 
 // 이달의 러닝일정
-.event-list-wrap {display: flex;flex-direction: column;width: 100%;padding: 20px;position: relative;box-sizing: border-box;
+.event-list-wrap {display: flex;flex-direction: column;max-width: 760px;width: 100%;padding: 30px 20px 20px;position: relative;box-sizing: border-box;
   .my-list{margin-left: auto;}
   .swipe-modal{height: 50vh !important;
     .swipe-modal-content{
@@ -116,16 +116,27 @@ body.overflow-y{overflow-y: hidden;}
       .form{height: calc(50dvh - 36px) !important;box-sizing: border-box;margin-bottom: 130px;}
     }
   }
-  .event-list{
+  .event-list{width: 100%; display: flex; flex-direction: column; padding-top: 40px; box-sizing: border-box;
     .applications{}
     .event-details{display: flex;align-items: stretch;justify-content:space-between;
-      .event-cont{position: relative;width: 100%;padding-left: 10px;
+      .event-cont{position: relative;width: 100%;padding: 0 30px 0 15px;
         .event-title{margin-top: 25px;}
         .go-applicants:after{content: "";position: absolute;right: 20px;top: 50%;transform: translateY(-50%) rotate(315deg);width: 10px;height: 10px;border-right: 2px solid black;border-bottom: 2px solid black;}
         .event-desc{font-size: 13px;margin-top: 2px;}
         }
     }
-    .event-item{position: relative;padding: 0px;border: 1px solid #ddd;margin-bottom: 10px;background: #f9f9f9;}
+    .event-item{position: relative;padding: 0px;border: 1px solid #ddd;margin-bottom: 10px;background: #f9f9f9;
+      .event-info { display: flex; flex-direction: column; gap: 10px; 
+        .event-details { padding: 10px; border: 1px solid #ccc; border-radius: 4px;color: #000;font-weight: bold; cursor: pointer;background: #f1f2ff;
+          p { margin: 0; padding: 5px 0; }
+          .recruiting { color: #4caf50; font-weight: bold; }
+          .recruitment-completed { color: #f44336; font-weight: bold; }
+        }
+      }
+      .event-action { margin-top: 15px; 
+        .event-unavailable { color: #f44336; font-weight: bold; }
+      }
+    }
     .event-date{padding: 0 25px; background: #757575;
       .date-dates{margin-top: 20px;font-size: 18px; color: #fff;}
       .date-startTime{margin-top: 5px;font-size: 13px;color: #fff;}
@@ -138,6 +149,14 @@ body.overflow-y{overflow-y: hidden;}
     }
   }
 }
+
+//전체일정
+.eventList-header{display: flex;align-items:center;position: absolute;top: 20px;right: 20px;
+  .month-filter {width: 120px;height: 38px;padding: 8px 12px;margin-left: auto;font-size: 16px;border: 1px solid #ccc;border-radius: 5px;background: white;color: #333;appearance: none;}
+  .month-filter:focus {outline: none;border-color: #007bff;}
+  .month-filter:hover {border-color: #007bff;}
+}
+
 
 //이미지 미리보기
 .header-container{ width: 100%; position: relative;
@@ -311,20 +330,7 @@ input, textarea { width: 100%; padding: 8px; margin-bottom: 16px; border: 1px so
 .add-event-btn {background-color: #4caf50;color: white;padding: 10px 20px;border: none;border-radius: 4px;cursor: pointer;margin:10px 0;}
 .add-event-btn:hover {background-color: #45a049;}
 .custom-calendar {margin-top: 20px;}
-.event-list {max-width: 597px; width: 100%; display: flex; flex-direction: column; box-sizing: border-box;
-  .event-item { padding: 20px; border: 1px solid #ddd; background-color: #fff; 
-    .event-info { display: flex; flex-direction: column; gap: 10px; 
-      .event-details { padding: 10px; border: 1px solid #ccc; border-radius: 4px;color: #000;font-weight: bold; cursor: pointer;background: #f1f2ff;
-        p { margin: 0; padding: 5px 0; }
-        .recruiting { color: #4caf50; font-weight: bold; }
-        .recruitment-completed { color: #f44336; font-weight: bold; }
-      }
-    }
-    .event-action { margin-top: 15px; 
-      .event-unavailable { color: #f44336; font-weight: bold; }
-    }
-  }
-}
+
 .download-button {margin-bottom: 20px;padding: 10px 15px;background-color: #007bff;color: white;border: none;border-radius: 5px;cursor: pointer;  }
 .download-button:hover {background-color: #0056b3;}
 
@@ -356,14 +362,17 @@ input, textarea { width: 100%; padding: 8px; margin-bottom: 16px; border: 1px so
 
 //날씨
 .weather-container {display: flex;text-align: center;align-items:center;
-  .mySwiper {height: 100px;width: 100%;}
-  .weather-slide {display: flex;align-items: center;justify-content: center;text-align: center;
-    .description{font-size: 12px;margin-right: 10px;}
-    .cityName{font-size: 12px;margin-right: 5px;}
-  }
+  .weather-content{display: flex;align-items:center;
+    .swiper-slide{display: flex;align-items: center;}
+    .mySwiper {width: 100%;height: 80px;}
+    .weather-slide {display: flex;align-items: center;justify-content: center;text-align: center;
+      .description{font-size: 12px;margin-right: 10px;}
+      .cityName{font-size: 12px;margin-right: 5px;}
+    }
   .weather-info {display: flex;align-items: center;justify-content: center;}
-  .weather-info img {width: 100px;height: 100px;margin-right: 10px;}
+  .weather-info img {width: 50px;height: auto;margin-right: 10px;}
   button{padding: 0;width: 70px;height: 40px;}
+  }
 }
 
 
