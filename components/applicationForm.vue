@@ -384,8 +384,7 @@ const checkEventConflict = async (phone, selectedEventDate) => {
         return eventDate.isBetween(oneMonthBefore, oneMonthAfter, "day", "[]");
       })
     );
-
-    // 30일 이내 충돌하는 이벤트가 있으면 true 반환
+      // 30일 이내 충돌하는 이벤트가 있으면 true 반환
     return conflictingEvent.some((conflict) => conflict);
   } catch (error) {
     console.error("이벤트 충돌 확인 실패:", error);

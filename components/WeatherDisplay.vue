@@ -11,7 +11,7 @@
           direction="vertical"
           :loop="true"
           :speed="1000"
-          :autoplay="{ delay: 3000, disableOnInteraction: false }"
+          :autoplay="false"
           :slidesPerView="1"
           :slidesPerGroup="1"
           :key="swiperKey"
@@ -147,9 +147,6 @@ const fetchSeoulAreasWeather = async () => {
     if (weather) slides.push(weather);
   }
   weatherSlides.value = slides;
-  console.log('weatherSlides',weatherSlides.value);
-  console.log('weatherSlides1',unref(weatherSlides.value));
-  console.log('weatherSlides2',toRaw(weatherSlides.value));
   
   swiperKey.value++; // Swiper 재렌더링
 };
@@ -185,7 +182,7 @@ const getCurrentLocationWeather = async() => {
 
         // 도시명 추출 - 상세 지역부터 큰 범위 순으로 탐색
         const cityName = geoData.results[0].address_components.find((comp) => {
-          console.log("Examining Component:", comp);
+          console.log("comp:", comp);
 
           return (
             comp.types.includes("sublocality_level_1") ||  // 동/리

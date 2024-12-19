@@ -363,14 +363,18 @@ input, textarea { width: 100%; padding: 8px; margin-bottom: 16px; border: 1px so
 //날씨
 .weather-container {display: flex;text-align: center;align-items:center;
   .weather-content{display: flex;align-items:center;
-    .swiper-slide{display: flex;align-items: center;}
-    .mySwiper {width: 100%;height: 80px;}
-    .weather-slide {display: flex;align-items: center;justify-content: center;text-align: center;
-      .description{font-size: 12px;margin-right: 10px;}
-      .cityName{font-size: 12px;margin-right: 5px;}
+    .mySwiper {width: 100%;height: 80px;
+      .swiper-slide{display: flex;align-items: center;
+        .weather-slide {display: flex;align-items: center;justify-content: center;text-align: center;
+          .cityName{font-size: 17px;margin-right: 5px;}
+          .temp{font-size: 18px;font-weight: bold;}
+          .weather-info {display: flex;align-items: center;justify-content: center;
+            .description{font-size: 14px;margin-right: 15px;}
+            img {width: 50px;height: auto;margin-right: 0px;}
+          }
+        }
+      }
     }
-  .weather-info {display: flex;align-items: center;justify-content: center;}
-  .weather-info img {width: 50px;height: auto;margin-right: 10px;}
   button{padding: 0;width: 70px;height: 40px;}
   }
 }
