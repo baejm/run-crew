@@ -11,7 +11,7 @@
           direction="vertical"
           :loop="true"
           :speed="1000"
-          :autoplay="false"
+          :autoplay="{ delay: 3000, disableOnInteraction: false }"
           :slidesPerView="1"
           :slidesPerGroup="1"
           :key="swiperKey"
@@ -100,10 +100,6 @@ const weatherIconMap = {
   "11d": "wi-thunderstorm",
   "13d": "wi-snow",
   "50d": "wi-fog",
-};
-
-const getWeatherIcon = (iconCode) => {
-  return weatherIconMap[iconCode] || "wi-na"; // 기본값으로 '알 수 없음' 아이콘
 };
 
 // 날씨 설명 번역

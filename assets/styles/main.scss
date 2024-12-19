@@ -110,13 +110,14 @@ body.overflow-y{overflow-y: hidden;}
 // 이달의 러닝일정
 .event-list-wrap {display: flex;flex-direction: column;max-width: 760px;width: 100%;padding: 30px 20px 20px;position: relative;box-sizing: border-box;
   .my-list{margin-left: auto;}
+  .all-list{position: absolute;right: 20px;top: 30px;}
   .swipe-modal{height: 50vh !important;
     .swipe-modal-content{
       .panel{height: calc(50dvh - 36px) !important;}
       .form{height: calc(50dvh - 36px) !important;box-sizing: border-box;margin-bottom: 130px;}
     }
   }
-  .event-list{width: 100%; display: flex; flex-direction: column; padding-top: 40px; box-sizing: border-box;
+  .event-list{width: 100%; display: flex; flex-direction: column; padding-top: 10px; box-sizing: border-box;
     .applications{}
     .event-details{display: flex;align-items: stretch;justify-content:space-between;
       .event-cont{position: relative;width: 100%;padding: 0 30px 0 15px;
@@ -152,7 +153,7 @@ body.overflow-y{overflow-y: hidden;}
 
 //전체일정
 .eventList-header{display: flex;align-items:center;position: absolute;top: 20px;right: 20px;
-  .month-filter {width: 120px;height: 38px;padding: 8px 12px;margin-left: auto;font-size: 16px;border: 1px solid #ccc;border-radius: 5px;background: white;color: #333;appearance: none;}
+  .month-filter {width: 90px;height: 30px;padding: 4px 12px;margin-left: auto;font-size: 16px;border: 1px solid #ccc;border-radius: 5px;background: white;font-size: 14px;color: #333;appearance: none;}
   .month-filter:focus {outline: none;border-color: #007bff;}
   .month-filter:hover {border-color: #007bff;}
 }
@@ -363,6 +364,7 @@ input, textarea { width: 100%; padding: 8px; margin-bottom: 16px; border: 1px so
 //날씨
 .weather-container {display: flex;text-align: center;align-items:center;
   .weather-content{display: flex;align-items:center;
+    button{padding: 0;width: 70px;height: 40px;}
     .mySwiper {width: 100%;height: 80px;
       .swiper-slide{display: flex;align-items: center;
         .weather-slide {display: flex;align-items: center;justify-content: center;text-align: center;
@@ -375,7 +377,6 @@ input, textarea { width: 100%; padding: 8px; margin-bottom: 16px; border: 1px so
         }
       }
     }
-  button{padding: 0;width: 70px;height: 40px;}
   }
 }
 
