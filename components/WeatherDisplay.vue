@@ -86,20 +86,7 @@ const weatherDescriptions = {
   "squall": "돌풍",
   "tornado": "회오리바람",
   "박무": "안개",
-};
-
-const weatherIconMap = {
-  "01d": "wi-day-sunny",
-  "01n": "wi-night-clear",
-  "02d": "wi-day-cloudy",
-  "02n": "wi-night-alt-cloudy",
-  "03d": "wi-cloud",
-  "04d": "wi-cloudy",
-  "09d": "wi-showers",
-  "10d": "wi-rain",
-  "11d": "wi-thunderstorm",
-  "13d": "wi-snow",
-  "50d": "wi-fog",
+  "튼구름" : "구름 많음"
 };
 
 // 날씨 설명 번역

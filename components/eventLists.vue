@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="eventList-header">
-      <button v-if="userStore.isAdmin" @click.stop="gotoInvitation" class="add-event-btn">이벤트 추가</button>
       <select v-if="props.all" v-model="selectedMonth" class="month-filter">
         <option value="">전체 보기</option>
         <option v-for="month in availableMonths" :key="month" :value="month">
           {{ month }}월
         </option>
       </select>
+      <NuxtLink v-else :to="`/event/eventListPage`" class="all-list">전체일정</NuxtLink>
     </div>
     <ul class="event-list">
       <li v-for="event in displayedEvents" :key="event.id" class="event-item">

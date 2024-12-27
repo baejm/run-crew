@@ -2,7 +2,7 @@
     <div>
       <h1>이벤트 상세 페이지</h1>
       <div v-if="event">
-        <div v-if="userStore.isAdmin">
+        <div v-if="userStore.isAdmin" class="detail_btn">
           <NuxtLink :to="`/event/${event.id}/edit`" class="edit-button">수정하기</NuxtLink>
           <button @click="deleteEvent" class="delete-button">삭제하기</button>
         </div>
@@ -74,31 +74,4 @@ function formatDate(date) {
 }
   </script>
  <style scoped>
-.event-image {
-  max-width: 100%;
-  height: auto;
-}
-.edit-button {
-  margin-top: 20px;
-  padding: 10px 15px;
-  background-color: #007BFF;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
-.edit-button:hover {
-  background-color: #0056b3;
-}
-.delete-button {
-  margin-top: 10px;
-  padding: 10px 15px;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.delete-button:hover {
-  background-color: #c82333;
-}
 </style> 

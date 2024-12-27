@@ -7,14 +7,16 @@ import { getAuth } from "firebase/auth";
 
 
 export default defineNuxtPlugin(() => {
+  const config = useRuntimeConfig();
+
   const firebaseConfig = {
     //파이어베이스 디비2용 예비용
-    apiKey: "AIzaSyA2s2upTZlkeY_WMwzbgWOfc-85Evj97Fo",
-    authDomain: "nuxt3-crew2.firebaseapp.com",
-    projectId: "nuxt3-crew2",
-    storageBucket: "nuxt3-crew2.firebasestorage.app",
-    messagingSenderId: "879901733988",
-    appId: "1:879901733988:web:bd4fd554a09c533c385b71"
+    apiKey: config.public.firebaseApiKey,
+    authDomain: config.public.firebaseAuthDomain,
+    projectId: config.public.firebaseProjectId,
+    storageBucket: config.public.firebaseStorageBucket,
+    messagingSenderId: config.public.firebaseMessagingSenderId,
+    appId: config.public.firebaseAppId,
   }
 
   // Firebase 앱 초기화

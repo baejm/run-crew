@@ -12,5 +12,8 @@
         "function": "ssrFunction"
       }
     ]
+  },
+  "functions": {
+    "source": "functions"
   }
 }
